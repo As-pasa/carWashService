@@ -4,19 +4,23 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
 
-@Data
 @Entity
 @NoArgsConstructor
-
+@Data
+@Table(name = "wash_type")
 public class WashType {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
-    private Long durationMinutes;
-    public WashType(String name, Long durationMinutes){
+    private Long requiredMinutes;
+
+    @OneToMany(mappedBy = "washType",cascade = CascadeType.ALL,orphanRemoval = true)
+    private List<BookingSlot> slotsOfType;
+    public WashType(String name, Long requiredMinutes){
         this.name=name;
-        this.durationMinutes=durationMinutes;
+        this.requiredMinutes=requiredMinutes;
     }
 }

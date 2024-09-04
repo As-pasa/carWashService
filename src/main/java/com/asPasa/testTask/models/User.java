@@ -2,35 +2,64 @@ package com.asPasa.testTask.models;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Data
 @Entity
+@Data
+@NoArgsConstructor
+@Builder
+@AllArgsConstructor
 @Table(name = "users")
-public class User {
-    @GeneratedValue(strategy = GenerationType.AUTO)
+public class User implements UserDetails {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String username;
+    private String name;
     private String email;
-    @OneToMany(mappedBy = "id",cascade = CascadeType.ALL,orphanRemoval = true)
-    private List<CarReservation> reservations;
+    @OneToMany(mappedBy = "owner")
+    private List<BookingSlot> slots;
+    private String password;
+    @Enumerated(EnumType.STRING)
+    private RoleType role;
 
-    public User(String name, String email) {
-        username=name;
-        this.email=email;
-        reservations=new ArrayList<>();
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return Stream.of(role).map(x -> new SimpleGrantedAuthority(x.name())).collect(Collectors.toList());
     }
 
-    public void setState(User other){
-        this.username=other.username;
-        this.email=other.username;
-        this.setReservations(other.getReservations());
+    @Override
+    public String getUsername() {
+        return name;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }
