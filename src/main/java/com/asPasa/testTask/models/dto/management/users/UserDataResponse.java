@@ -1,19 +1,20 @@
-package com.asPasa.testTask.models.dto.auth;
+package com.asPasa.testTask.models.dto.management.users;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Schema(description = "Запрос регистрации пользователя")
-public class SignUpRequest {
+@Data
+@Schema(description = "Ответ на запрос данных о пользователе")
+public class UserDataResponse {
     @Schema(description = "Имя пользователя")
-    private String name;
+    private String userName;
+    @Schema(description = "Роль пользователя")
+    private String role;
     @Schema(description = "Адрес электронной почты пользователя")
     private String email;
-    @Schema(description = "Пароль пользователя")
-    private String password;
+
 }

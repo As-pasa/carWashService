@@ -22,12 +22,14 @@ public class BookingSlot {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User owner;
+    @Column(name="reservation_time")
     private Date startTime;
 
     public SlotTimeInterval getInterval() {
         return new SlotTimeInterval(startTime, Duration.ofMinutes(washType.getRequiredMinutes()));
     }
     public BookingSlot(User owner, WashType washType, Date startTime){
+        this.id=0L;
         this.owner=owner;
         this.startTime=startTime;
         this.washType=washType;

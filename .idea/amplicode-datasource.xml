@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AmplicodeJpaDataSourceConfig">
+    <data-sources>
+      <data-source id="ff30c1ea-ddfd-49e3-baa9-3cdeaa1bffdc" name="testTaskDb" url="jdbc:postgresql://localhost:5432/testTaskDb" driverClass="org.postgresql.Driver" />
+    </data-sources>
+  </component>
+</project>

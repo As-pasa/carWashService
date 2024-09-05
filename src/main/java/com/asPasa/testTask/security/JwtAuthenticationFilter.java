@@ -30,6 +30,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
 
+        if(request.getRequestURL().toString().contains("api") ||request.getRequestURL().toString().contains("swagger") ){
+            filterChain.doFilter(request,response);
+            return;
+        }
 
         String header= request.getHeader(HEADER_NAME);
         if(StringUtils.isEmpty(header) || !StringUtils.startsWithIgnoreCase(header, HEADER_PREFIX)){
